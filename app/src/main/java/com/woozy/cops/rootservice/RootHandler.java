@@ -25,7 +25,6 @@ public class RootHandler implements Handler.Callback {
     public void Inject(Activity activity) {
         MSGConnection mSGConnection = messageConnection;
         if (mSGConnection == null) {
-            new RootService(activity);
             RootService.bind(new Intent(activity, RootService.class), new MSGConnection());
         } else {
             RootService.unbind(mSGConnection);
@@ -36,7 +35,7 @@ public class RootHandler implements Handler.Callback {
     public boolean handleMessage(@NonNull Message message) {
         int result = message.getData().getInt("result");
 
-        Log.e("mystik", "RootHandler.handleMessage.result: " + result);
+        Log.e("mystik", "RootHandler.handleMessage : result -> " + result);
 
         return false;
     }
@@ -46,11 +45,11 @@ public class RootHandler implements Handler.Callback {
 
         @Override
         public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
+            Log.e("mystik", "inside MSGConnection.onServiceConnected");
             remoteMessenger = new Messenger(iBinder);
             messageConnection = this;
 
             Message message = Message.obtain((Handler) null, 1);
-            Log.e("mystik", "MSGConnection.onServiceConnected.message.what: " + message.what);
             message.replyTo = replyMessenger;
 
             try {

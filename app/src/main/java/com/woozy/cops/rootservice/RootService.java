@@ -18,14 +18,13 @@ public class RootService extends com.topjohnwu.superuser.ipc.RootService impleme
     @Override
     public void onCreate() {
         super.onCreate();
-        Log.e("mystik", "hello");
         Log.e("mystik", "inside RootService.onCreate");
-        Log.e("mystik", "MainActivity.thisInstance: " + MainActivity.thisInstance);
+        Log.e("mystik", "MainActivity.thisInstance -> " + MainActivity.thisInstance);
     }
 
     @Override
     public boolean handleMessage(@NonNull Message message) {
-        Log.e("mystik", "handleMessage");
+        Log.e("mystik", "inside RootService.handleMessage");
         if(message.what != 1) {
             return false;
         }
@@ -48,7 +47,7 @@ public class RootService extends com.topjohnwu.superuser.ipc.RootService impleme
 
     @Override
     public IBinder onBind(@NonNull Intent intent) {
-        Log.e("mystik", "onBind");
+        Log.e("mystik", "inside RootService.onBind");
         Handler handler = new Handler(Looper.getMainLooper(), this);
         return new Messenger(handler).getBinder();
     }
